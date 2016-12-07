@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          'dist/miw-framework.min.js': ['src/declare.js', 'src/utilities.js', 'src/this-element.js', 'src/init.js']
+          'miw-framework.min.js': ['src/declare.js', 'src/utilities.js', 'src/this-element.js', 'src/init.js']
         }
       }
     }

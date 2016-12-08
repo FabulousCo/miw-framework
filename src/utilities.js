@@ -1,3 +1,39 @@
+Miw.prototype.nombre = function(n) {
+
+    var regex = new RegExp("[0-9]*\.?[0-9]*");
+
+    var formatted = regex.test(n);
+
+    return (formatted && typeof n == 'string');
+};
+
+// TO FINISH
+Miw.prototype.entierPositif = function(n) {
+    if (! nombre(n)) return false;
+};
+
+Miw.prototype.pair = function(x) {
+    return (x % 2 ? false : true);
+};
+
+Miw.prototype.arrondi = function(x, n) {
+    return parseFloat(x).toFixed(n);
+};
+
+Miw.prototype.nboccurence = function(c, ch) {
+    var regex = new RegExp(c, 'g');
+
+    var formatted = ch.match(regex);
+
+    return formatted.length;
+};
+
+Miw.prototype.substitute = function(c1, c2, c) {
+    var regex = new RegExp(c1, 'g');
+
+    return c.replace(regex, c2);
+};
+
 // 16-11-30
 Miw.prototype.select = function(cssSelector) {
     if (cssSelector) {

@@ -1,3 +1,8 @@
+Miw.prototype.substitue = function(c1, c2) {
+    var string = this.element.textContent;
+    return string.split(c1).join(c2);
+};
+
 Miw.prototype.dn = function() {
     return this.element.remove();
 };
@@ -47,4 +52,11 @@ Miw.prototype.get = function(){
     if (! this.element) return null;
 
     return this.element;
+};
+Miw.prototype.moveTo = function(x, y) {
+    if (! this.element) return null;
+
+    this.css({position: 'absolute', left: x, top: y});
+
+    return true;
 };

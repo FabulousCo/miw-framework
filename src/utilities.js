@@ -52,9 +52,7 @@ Miw.prototype.n = function(n) {
 Miw.prototype.cf = function() {
     return document.createDocumentFragment();
 };
-Miw.prototype.ce = function(el, nodeIns) {
-    var element = document.createElement(el);
-
+Miw.prototype.appendElementToNodeIns = function(element, nodeIns) {
     if (nodeIns) {
         if (nodeIns.element != null) {
             nodeIns.element.appendChild(element);
@@ -67,20 +65,15 @@ Miw.prototype.ce = function(el, nodeIns) {
 
     return this;
 };
+Miw.prototype.ce = function(el, nodeIns) {
+    var element = document.createElement(el);
+
+    return this.appendElementToNodeIns(element, nodeIns);
+};
 Miw.prototype.ct = function(tx, nodeIns) {
     var element = document.createTextNode(tx);
 
-    if (nodeIns) {
-        if (nodeIns.element != null) {
-            nodeIns.element.appendChild(element);
-            this.element = nodeIns.element;
-        } else {
-            nodeIns.appendChild(element);
-            this.element = element;
-        }
-    }
-
-    return this;
+    return this.appendElementToNodeIns(element, nodeIns);
 };
 Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
     var element = document.createElement(node);
@@ -93,9 +86,7 @@ Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
         element.style[k] = styles[k];
     }
 
-    if (nodeIns) nodeIns.appendChild(element);
-
-    return element;
+    return this.appendElementToNodeIns(element, nodeIns);
 };
 Miw.prototype.each = function(o,f){
     for (var i in o){ f(i,o[i])}

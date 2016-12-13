@@ -4,4 +4,6 @@ var Miw = function(cssSelector){
     if (cssSelector) {
         this.element = this.select(cssSelector);
     }
+
+    return this;
 };

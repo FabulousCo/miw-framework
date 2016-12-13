@@ -101,7 +101,7 @@ Miw.prototype.on = function(event, action) {
     if (! this.element) return null;
     if (event == null || action == null) return false;
 
-    this.element.addEventListener(event, action(this));
+    this.element.addEventListener(event, action);
 
     return this;
 };
@@ -117,4 +117,38 @@ Miw.prototype.parent = function() {
     miw.element = this.element.parentElement;
 
     return miw;
+};
+Miw.prototype.offsetTop = function(offsetTop) {
+    if (! this.element) return null;
+
+    if (offsetTop == null) return this.element.style.top;
+
+    this.element.style.position = 'absolute';
+    this.element.style.top      = offsetTop+'px';
+
+    return this;
+};
+Miw.prototype.offsetLeft = function(offsetLeft) {
+    if (! this.element) return null;
+
+    if (offsetLeft == null) return this.element.style.left;
+
+    this.element.style.position = 'absolute';
+    this.element.style.left     = offsetLeft+'px';
+
+    return this;
+};
+Miw.prototype.hide = function() {
+    if (! this.element) return null;
+
+    this.element.style.display = 'none';
+
+    return this;
+};
+Miw.prototype.show = function() {
+    if (! this.element) return null;
+
+    this.element.style.display = 'inline-block';
+
+    return this;
 };

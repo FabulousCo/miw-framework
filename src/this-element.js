@@ -114,7 +114,7 @@ Miw.prototype.parent = function() {
     if (! this.element) return null;
 
     var miw = new Miw();
-    miw.element = this.element.parentElement();
+    miw.element = this.element.parentElement;
 
     return miw;
 };

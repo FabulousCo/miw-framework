@@ -101,7 +101,7 @@ Miw.prototype.on = function(event, action) {
     if (! this.element) return null;
     if (event == null || action == null) return false;
 
-    this.element.addEventListener(event, action(e, this));
+    this.element.addEventListener(event, action(this));
 
     return this;
 };

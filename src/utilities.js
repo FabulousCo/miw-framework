@@ -70,9 +70,17 @@ Miw.prototype.ce = function(el, nodeIns) {
 Miw.prototype.ct = function(tx, nodeIns) {
     var element = document.createTextNode(tx);
 
-    if (nodeIns) nodeIns.appendChild(element);
+    if (nodeIns) {
+        if (nodeIns.element != null) {
+            nodeIns.element.appendChild(element);
+            this.element = nodeIns.element;
+        } else {
+            nodeIns.appendChild(element);
+            this.element = element;
+        }
+    }
 
-    return element;
+    return this;
 };
 Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
     var element = document.createElement(node);

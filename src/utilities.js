@@ -56,11 +56,10 @@ Miw.prototype.appendElementToNodeIns = function(element, nodeIns) {
     if (nodeIns) {
         if (nodeIns.element != null) {
             nodeIns.element.appendChild(element);
-            this.element = nodeIns.element;
         } else {
             nodeIns.appendChild(element);
-            this.element = element;
         }
+        this.element = element;
     }
 
     return this;
@@ -68,14 +67,12 @@ Miw.prototype.appendElementToNodeIns = function(element, nodeIns) {
 Miw.prototype.ce = function(el, nodeIns) {
     var element = document.createElement(el);
 
-    this.appendElementToNodeIns(element, nodeIns);
-    return this;
+    return this.appendElementToNodeIns(element, nodeIns);
 };
 Miw.prototype.ct = function(tx, nodeIns) {
     var element = document.createTextNode(tx);
 
-    this.appendElementToNodeIns(element, nodeIns);
-    return this;
+    return this.appendElementToNodeIns(element, nodeIns);
 };
 Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
     var element = document.createElement(node);
@@ -88,8 +85,7 @@ Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
         element.style[k] = styles[k];
     }
 
-    this.appendElementToNodeIns(element, nodeIns);
-    return this;
+    return this.appendElementToNodeIns(element, nodeIns);
 };
 Miw.prototype.each = function(o,f){
     for (var i in o){ f(i,o[i])}

@@ -88,3 +88,11 @@ Miw.prototype.width = function(width) {
 
     return this;
 };
+Miw.prototype.val = function(val) {
+    if (! this.element) return null;
+
+    if (val == null) return this.element.value;
+    this.element.value = val;
+
+    return this;
+};

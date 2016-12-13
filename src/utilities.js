@@ -1,4 +1,4 @@
-Miw.prototype.nombre = function(n) {
+Miw.prototype.number = function(n) {
 
     var regex = new RegExp("[0-9]*\.?[0-9]*");
 
@@ -8,7 +8,7 @@ Miw.prototype.nombre = function(n) {
 };
 
 // TO FINISH
-Miw.prototype.entierPositif = function(n) {
+Miw.prototype.positifInteger = function(n) {
     if (! nombre(n)) return false;
 };
 
@@ -16,7 +16,7 @@ Miw.prototype.pair = function(x) {
     return (x % 2 ? false : true);
 };
 
-Miw.prototype.arrondi = function(x, n) {
+Miw.prototype.round = function(x, n) {
     return parseFloat(x).toFixed(n);
 };
 
@@ -55,7 +55,13 @@ Miw.prototype.cf = function() {
 Miw.prototype.ce = function(el, nodeIns) {
     var element = document.createElement(el);
 
-    if (nodeIns) nodeIns.appendChild(element);
+    if (nodeIns) {
+        if (nodeIns.element != null) {
+            nodeIns.element.appendChild(element);
+        } else {
+            nodeIns.appendChild(element);
+        }
+    }
 
     return element;
 };

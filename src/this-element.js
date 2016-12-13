@@ -4,8 +4,7 @@ Miw.prototype.substitue = function(c1, c2) {
 
     return this;
 };
-
-Miw.prototype.dn = function() {
+Miw.prototype.delete = function() {
     return this.element.remove();
 };
 Miw.prototype.text = function(text) {
@@ -95,4 +94,17 @@ Miw.prototype.val = function(val) {
     this.element.value = val;
 
     return this;
+};
+Miw.prototype.on = function(event, action) {
+    if (! this.element) return null;
+    if (event == null || action == null) return false;
+
+    this.element.addEventListener(event, action);
+
+    return this;
+};
+Miw.prototype.getElement = function() {
+    if (! this.element) return null;
+
+    return this.element;
 };

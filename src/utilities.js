@@ -68,12 +68,14 @@ Miw.prototype.appendElementToNodeIns = function(element, nodeIns) {
 Miw.prototype.ce = function(el, nodeIns) {
     var element = document.createElement(el);
 
-    return this.appendElementToNodeIns(element, nodeIns);
+    this.appendElementToNodeIns(element, nodeIns);
+    return this;
 };
 Miw.prototype.ct = function(tx, nodeIns) {
     var element = document.createTextNode(tx);
 
-    return this.appendElementToNodeIns(element, nodeIns);
+    this.appendElementToNodeIns(element, nodeIns);
+    return this;
 };
 Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
     var element = document.createElement(node);
@@ -86,7 +88,8 @@ Miw.prototype.cn = function(node, attributes, styles, nodeIns) {
         element.style[k] = styles[k];
     }
 
-    return this.appendElementToNodeIns(element, nodeIns);
+    this.appendElementToNodeIns(element, nodeIns);
+    return this;
 };
 Miw.prototype.each = function(o,f){
     for (var i in o){ f(i,o[i])}

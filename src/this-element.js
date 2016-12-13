@@ -10,6 +10,8 @@ Miw.prototype.delete = function() {
 Miw.prototype.text = function(text) {
     if (! this.element) return null;
 
+    if(text == null) return text;
+
     this.element.textContent = text;
 
     return this;

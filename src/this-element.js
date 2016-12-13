@@ -110,3 +110,11 @@ Miw.prototype.getElement = function() {
 
     return this.element;
 };
+Miw.prototype.parent = function() {
+    if (! this.element) return null;
+
+    var miw = new Miw();
+    miw.element = this.element.parentElement();
+
+    return miw;
+};

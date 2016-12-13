@@ -97,11 +97,17 @@ Miw.prototype.val = function(val) {
 
     return this;
 };
+Miw.prototype.temporaryEventListenerAdded = function(action) {
+    action();
+};
 Miw.prototype.on = function(event, action) {
     if (! this.element) return null;
     if (event == null || action == null) return false;
 
-    this.element.addEventListener(event, action);
+    var thisObject = this;
+    this.element.addEventListener(event, function() {
+        thisObject.temporaryEventListenerAdded(action);
+    });
 
     return this;
 };

@@ -7,11 +7,6 @@ Miw.prototype.number = function(n) {
     return (formatted && typeof n == 'string');
 };
 
-// TO FINISH
-Miw.prototype.positifInteger = function(n) {
-    if (! nombre(n)) return false;
-};
-
 Miw.prototype.pair = function(x) {
     return (x % 2 ? false : true);
 };
@@ -38,6 +33,11 @@ Miw.prototype.substitute = function(c1, c2, c) {
 Miw.prototype.select = function(cssSelector) {
     if (cssSelector) {
         return document.querySelector(cssSelector);
+    }
+};
+Miw.prototype.selectAll = function(cssSelector) {
+    if (cssSelector) {
+        return document.querySelectorAll(cssSelector);
     }
 };
 Miw.prototype.id = function(id) {
@@ -119,4 +119,45 @@ String.prototype.extend = function(obj) {
     }
     return this;
 };
+Miw.prototype.processSingleOrAll = function(myFunction) {
+    if (this.element) {
+        myFunction(this.element);
+    } else if (this.elements) {
+        this.elements.forEach(function(element) {
+            myFunction(element);
+        });
+    }
 
+    return this;
+};
+Miw.prototype.ajax = function(json) {
+    if (['get', 'post', 'delete', 'put', 'patch'].indexOf(json.type) < 0) {
+        console.log('http method is wrong'); return false;
+    }
+
+    var type    = json.type;
+    var url     = json.url;
+    var success = json.success;
+    if (['post', 'delete', 'put', 'patch'].indexOf(type.toLowerCase()) >= 0 && json.data) {
+        var data = '';
+        for (var k in json.data) {
+            data += k+'='+encodeURIComponent(json.data[k])+'&';
+        }
+    } else {
+        data = null;
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open(type, url, true);
+
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && (this.status == 200 || this.status == 201 || this.status == 0)) {
+            success(this.responseText);
+        } else if (this.readyState == 4) {
+            console.log('error : '+ this.status);
+        }
+    };
+    xhttp.send(data);
+};

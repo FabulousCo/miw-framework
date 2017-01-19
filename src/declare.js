@@ -1,8 +1,10 @@
 var Miw = function(cssSelector){
     this.element = false;
+    this.elements = false;
 
     if (cssSelector) {
-        this.element = this.select(cssSelector);
+        if (document.querySelectorAll(cssSelector).length == 1) this.element = this.select(cssSelector);
+        else this.elements = this.selectAll(cssSelector);
     }
 
     return this;

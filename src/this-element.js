@@ -1,109 +1,97 @@
 Miw.prototype.substitue = function(c1, c2) {
-    var string = this.element.textContent;
-    string.split(c1).join(c2);
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.textContent.split(c1).join(c2);
+    });
 };
 Miw.prototype.delete = function() {
-    return this.element.remove();
+    return this.processSingleOrAll(function(element){
+        element.remove();
+    });
 };
 Miw.prototype.text = function(text) {
-    if (! this.element) return null;
+    if (this.element && text == null) return this.element.textContent;
+    else if (this.elements && text == null) return null;
 
-    if(text == null) return text;
-
-    this.element.textContent = text;
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.textContent = text;
+    });
 };
 Miw.prototype.capitalize = function() {
-    if (! this.element) return null;
-
-    var text = this.element.textContent;
-    this.element.textContent = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.textContent = element.textContent.charAt(0).toUpperCase() + element.textContent.slice(1).toLowerCase();;
+    });
 };
 Miw.prototype.left = function(n) {
-    if (! this.element) return null;
-
-    var string = '';
-    for (var i = 0; i < n; i++) {
-        string += this.element.textContent[i];
-    }
-    this.element.textContent = string;
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        var string = '';
+        for (var i = 0; i < n; i++) {
+            string += element.textContent[i];
+        }
+        element.textContent = string;
+    });
 };
 Miw.prototype.right = function(n) {
-    if (! this.element) return null;
-
-    var string = '';
-    for (var i = this.length - 1; i > this.length - n; i--) {
-        string = this.element.textContent[i] + string;
-    }
-    this.element.textContent = string;
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        var string = '';
+        for (var i = element.length - 1; i > element.length - n; i--) {
+            string = element.textContent[i] + string;
+        }
+        element.textContent = string;
+    });
 };
 Miw.prototype.trim = function() {
-    if (! this.element) return null;
-    this.element.textContent.replace(/^\s+|\s+$/gm,'');
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.textContent.replace(/^\s+|\s+$/gm,'');
+    });
 };
 Miw.prototype.changeId = function(val) {
-    if (! this.element) return null;
-    this.element.id = val;
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.id = val;
+    });
 };
 Miw.prototype.css = function(obj){
-    if (! this.element) return null;
-    for (var i in obj) {
-        this.element.style[i] = obj[i];
-    }
-    return this;
+    return this.processSingleOrAll(function(element){
+        for (var i in obj) {
+            element.style[i] = obj[i];
+        }
+    });
 };
 Miw.prototype.moveTo = function(x, y) {
-    if (! this.element) return null;
-
-    this.css({position: 'absolute', left: x, top: y});
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.style.position = 'absolute';
+        element.style.left     = x+'px';
+        element.style.top      = y+'px';
+    });
 };
 Miw.prototype.height = function(height) {
-    if (! this.element) return null;
+    if (this.element && height == null) return this.element.offsetHeight;
+    if (this.elements) return null;
 
-    if (height == null) return this.element.offsetHeight;
+    return this.processSingleOrAll(function(element){
+        if (height == null) return element.offsetHeight;
 
-    this.element.innerHeight = height;
-
-    return this;
+        element.style.height = height+'px';
+    });
 };
 Miw.prototype.width = function(width) {
-    if (! this.element) return null;
+    if (this.element && width == null) return this.element.offsetWidth;
+    if (this.elements) return null;
 
-    if (width == null) return this.element.offsetWidth;
-    this.element.innerWidth = width;
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        element.style.width = width+'px';
+    });
 };
 Miw.prototype.val = function(val) {
-    if (! this.element) return null;
-
-    if (val == null) return this.element.value;
-    this.element.value = val;
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        if (val == null) return element.value;
+        element.value = val;
+    });
 };
 Miw.prototype.on = function(event, action) {
-    if (! this.element) return null;
-    if (event == null || action == null) return false;
-
-    this.element.addEventListener(event, action);
-
-    return this;
+    return this.processSingleOrAll(function(element){
+        if (event == null || action == null) return false;
+        element.addEventListener(event, action);
+    });
 };
 Miw.prototype.getElement = function() {
     if (! this.element) return null;
@@ -121,7 +109,7 @@ Miw.prototype.parent = function() {
 Miw.prototype.offsetTop = function(offsetTop) {
     if (! this.element) return null;
 
-    if (offsetTop == null) return this.element.style.top;
+    if (offsetTop == null) return parseInt(this.element.style.top);
 
     this.element.style.position = 'absolute';
     this.element.style.top      = offsetTop+'px';
@@ -131,7 +119,7 @@ Miw.prototype.offsetTop = function(offsetTop) {
 Miw.prototype.offsetLeft = function(offsetLeft) {
     if (! this.element) return null;
 
-    if (offsetLeft == null) return this.element.style.left;
+    if (offsetLeft == null) return parseInt(this.element.style.left);
 
     this.element.style.position = 'absolute';
     this.element.style.left     = offsetLeft+'px';
@@ -139,16 +127,51 @@ Miw.prototype.offsetLeft = function(offsetLeft) {
     return this;
 };
 Miw.prototype.hide = function() {
+    return this.processSingleOrAll(function(element){
+        element.style.display = 'none';
+    });
+};
+Miw.prototype.show = function() {
+    return this.processSingleOrAll(function(element){
+        element.style.display = 'inline-block';
+    });
+};
+Miw.prototype.append = function(el, attributes, styles) {
     if (! this.element) return null;
 
-    this.element.style.display = 'none';
+    var element = document.createElement(el);
+
+    if (attributes != null) {
+        for (var k in attributes) {
+            element.setAttribute(k, attributes[k]);
+        }
+    }
+
+    if (styles != null) {
+        for (var k in styles) {
+            element.style[k] = styles[k];
+        }
+    }
+
+    this.element.appendChild(element);
 
     return this;
 };
-Miw.prototype.show = function() {
-    if (! this.element) return null;
+Miw.prototype.empty = function() {
+    return this.processSingleOrAll(function(element){
+        element.innerHTML = '';
+    });
+};
+Miw.prototype.first = function() {
+    if (! this.elements) return null;
 
-    this.element.style.display = 'inline-block';
+    this.element  = this.elements[0];
+    this.elements = false;
 
     return this;
+};
+Miw.prototype.thisIsAnArray = function() {
+    if (! this.elements) return false;
+
+    if (typeof this.elements == Array) return true;
 };

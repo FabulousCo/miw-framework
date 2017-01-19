@@ -138,6 +138,8 @@ Miw.prototype.ajax = function(json) {
     var type    = json.type;
     var url     = json.url;
     var success = json.success;
+    var parse   = json.parse == false;
+
     if (['post', 'delete', 'put', 'patch'].indexOf(type.toLowerCase()) >= 0 && json.data) {
         var data = '';
         for (var k in json.data) {
@@ -154,7 +156,11 @@ Miw.prototype.ajax = function(json) {
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && (this.status == 200 || this.status == 201 || this.status == 0)) {
-            success(this.responseText);
+            if (parse) {
+                success(JSON.parse(this.responseText));
+            } else {
+                success(this.responseText);
+            }
         } else if (this.readyState == 4) {
             console.log('error : '+ this.status);
         }

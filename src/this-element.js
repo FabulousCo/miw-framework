@@ -170,6 +170,14 @@ Miw.prototype.first = function() {
 
     return this;
 };
+Miw.prototype.last = function() {
+    if (! this.element) return null;
+
+    this.element  = this.elements[this.elements.length];
+    this.elements = false;
+
+    return this;
+};
 Miw.prototype.thisIsAnArray = function() {
     if (! this.elements) return false;
 

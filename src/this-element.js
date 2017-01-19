@@ -82,8 +82,10 @@ Miw.prototype.width = function(width) {
     });
 };
 Miw.prototype.val = function(val) {
+    if (this.element && val == null) return this.element.value;
+    if (this.elements && val == null) return null;
+
     return this.processSingleOrAll(function(element){
-        if (val == null) return element.value;
         element.value = val;
     });
 };

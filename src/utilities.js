@@ -138,7 +138,7 @@ Miw.prototype.ajax = function(json) {
     var type    = json.type;
     var url     = json.url;
     var success = json.success;
-    var parse   = json.parse == false;
+    var parse   = json.parse != false;
 
     if (['post', 'delete', 'put', 'patch'].indexOf(type.toLowerCase()) >= 0 && json.data) {
         var data = '';

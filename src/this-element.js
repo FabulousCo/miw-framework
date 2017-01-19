@@ -171,9 +171,9 @@ Miw.prototype.first = function() {
     return this;
 };
 Miw.prototype.last = function() {
-    if (! this.element) return null;
+    if (! this.elements) return null;
 
-    this.element  = this.elements[this.elements.length];
+    this.element  = this.elements[this.elements.length - 1];
     this.elements = false;
 
     return this;

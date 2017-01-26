@@ -159,6 +159,11 @@ Miw.prototype.append = function(el, attributes, styles) {
 
     return this;
 };
+Miw.prototype.html = function(string) {
+    return this.processSingleOrAll(function(element){
+        element.innerHTML = string;
+    });
+};
 Miw.prototype.empty = function() {
     return this.processSingleOrAll(function(element){
         element.innerHTML = '';
@@ -184,4 +189,19 @@ Miw.prototype.thisIsAnArray = function() {
     if (! this.elements) return false;
 
     if (typeof this.elements == Array) return true;
+};
+Miw.prototype.hasClass = function(string) {
+    if (! this.element) return false;
+
+    return (this.element.className.split(' ').indexOf(string) >= 0);
+};
+Miw.prototype.addClass = function(string) {
+    return this.processSingleOrAll(function(element){
+        element.className = element.className + ' ' + string;
+    });
+};
+Miw.prototype.removeClass = function(string) {
+    return this.processSingleOrAll(function(element){
+        element.className = element.className.replace(string, '');
+    });
 };

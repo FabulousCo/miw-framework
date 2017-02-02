@@ -10,24 +10,6 @@ var Utilities = function () {
     }
 
     _createClass(Utilities, null, [{
-        key: 'select',
-        value: function select(cssSelector, doc) {
-            if (cssSelector) {
-                if (doc) {
-                    return doc.querySelector(cssSelector);
-                }
-                return document.querySelector(cssSelector);
-            }
-        }
-    }, {
-        key: 'selectAll',
-        value: function selectAll(cssSelector, doc) {
-            if (cssSelector) {
-                if (doc) return doc.querySelector(cssSelector);
-                return document.querySelectorAll(cssSelector);
-            }
-        }
-    }, {
         key: 'number',
         value: function number(n) {
             var regex = new RegExp("[0-9]*\.?[0-9]*");

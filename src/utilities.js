@@ -1,20 +1,5 @@
 class Utilities {
 
-    static select(cssSelector, doc) {
-        if (cssSelector) {
-            if (doc) {
-                return doc.querySelector(cssSelector);
-            }
-            return document.querySelector(cssSelector);
-        }
-    }
-    static selectAll(cssSelector, doc) {
-        if (cssSelector) {
-            if (doc) return doc.querySelector(cssSelector);
-            return document.querySelectorAll(cssSelector);
-        }
-    }
-
     static number(n) {
         let regex = new RegExp("[0-9]*\.?[0-9]*");
         let formatted = regex.test(n);

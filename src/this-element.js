@@ -5,16 +5,22 @@ class Miw extends Utilities {
         this.element = false;
         this.elements = false;
 
-
         if (cssSelector) {
-            if (cssSelector instanceof HTMLElement || cssSelector instanceof HTMLButtonElement) {
+            const selectorIsElement = cssSelector instanceof HTMLElement;
+
+            if (parent) console.log(cssSelector + ':' + parent);
+            if (parent && (parent instanceof HTMLElement)) {
+                if (document.querySelectorAll(cssSelector).length == 1) {
+                    if (selectorIsElement) this.element = cssSelector;
+                    this.element = parent.querySelector(cssSelector);
+                } else {
+                    this.elements = parent.querySelectorAll(cssSelector);
+                }
+            } else if (selectorIsElement) {
                 this.element = cssSelector;
-            } else if (parent && (parent instanceof HTMLElement || parent instanceof HTMLButtonElement)) {
-                if (document.querySelectorAll(cssSelector).length == 1) this.element = Utilities.select(cssSelector, parent);
-                else this.elements = Utilities.selectAll(cssSelector, parent);
             } else {
-                if (document.querySelectorAll(cssSelector).length == 1) this.element = Utilities.select(cssSelector);
-                else this.elements = Utilities.selectAll(cssSelector);
+                if (document.querySelectorAll(cssSelector).length == 1) this.element = document.querySelector(cssSelector);
+                else this.elements = document.querySelectorAll(cssSelector);
             }
         }
 
@@ -262,6 +268,10 @@ class Miw extends Utilities {
 
         if (typeof this.elements == Array) return true;
     }
+    count() {
+        if (! this.elements) return false;
+        return this.elements.length;
+    }
     hasClass(string) {
         if (! this.element) return false;
 
@@ -313,6 +323,7 @@ class Miw extends Utilities {
 
         return this.appendElementToNodeIns(element, nodeIns);
     }
+
 
 }
 

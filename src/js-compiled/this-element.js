@@ -24,12 +24,20 @@ var Miw = function (_Utilities) {
         _this.elements = false;
 
         if (cssSelector) {
-            if (cssSelector instanceof HTMLElement || cssSelector instanceof HTMLButtonElement) {
+            var selectorIsElement = cssSelector instanceof HTMLElement;
+
+            if (parent) console.log(cssSelector + ':' + parent);
+            if (parent && parent instanceof HTMLElement) {
+                if (document.querySelectorAll(cssSelector).length == 1) {
+                    if (selectorIsElement) _this.element = cssSelector;
+                    _this.element = parent.querySelector(cssSelector);
+                } else {
+                    _this.elements = parent.querySelectorAll(cssSelector);
+                }
+            } else if (selectorIsElement) {
                 _this.element = cssSelector;
-            } else if (parent && (parent instanceof HTMLElement || parent instanceof HTMLButtonElement)) {
-                if (document.querySelectorAll(cssSelector).length == 1) _this.element = Utilities.select(cssSelector, parent);else _this.elements = Utilities.selectAll(cssSelector, parent);
             } else {
-                if (document.querySelectorAll(cssSelector).length == 1) _this.element = Utilities.select(cssSelector);else _this.elements = Utilities.selectAll(cssSelector);
+                if (document.querySelectorAll(cssSelector).length == 1) _this.element = document.querySelector(cssSelector);else _this.elements = document.querySelectorAll(cssSelector);
             }
         }
 
@@ -332,6 +340,12 @@ var Miw = function (_Utilities) {
             if (!this.elements) return false;
 
             if (_typeof(this.elements) == Array) return true;
+        }
+    }, {
+        key: 'count',
+        value: function count() {
+            if (!this.elements) return false;
+            return this.elements.length;
         }
     }, {
         key: 'hasClass',

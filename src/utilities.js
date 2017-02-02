@@ -1,12 +1,16 @@
 class Utilities {
 
-    static select(cssSelector) {
+    static select(cssSelector, doc) {
         if (cssSelector) {
+            if (doc) {
+                return doc.querySelector(cssSelector);
+            }
             return document.querySelector(cssSelector);
         }
     }
-    static selectAll(cssSelector) {
+    static selectAll(cssSelector, doc) {
         if (cssSelector) {
+            if (doc) return doc.querySelector(cssSelector);
             return document.querySelectorAll(cssSelector);
         }
     }
@@ -48,41 +52,6 @@ class Utilities {
     }
     static cf() {
         return document.createDocumentFragment();
-    }
-    static appendElementToNodeIns(element, nodeIns) {
-        if (nodeIns) {
-            if (nodeIns.element != null) {
-                nodeIns.element.appendChild(element);
-            } else {
-                nodeIns.appendChild(element);
-            }
-            this.element = element;
-        }
-
-        return this;
-    }
-    static ce(el, nodeIns) {
-        let element = document.createElement(el);
-
-        return this.appendElementToNodeIns(element, nodeIns);
-    }
-    static ct(tx, nodeIns) {
-        let element = document.createTextNode(tx);
-
-        return this.appendElementToNodeIns(element, nodeIns);
-    }
-    static cn(node, attributes, styles, nodeIns) {
-        let element = document.createElement(node);
-
-        for (let k in attributes) {
-            element.setAttribute(k, attributes[k]);
-        }
-
-        for (let k in styles) {
-            element.style[k] = styles[k];
-        }
-
-        return this.appendElementToNodeIns(element, nodeIns);
     }
     static convertCss(string) {
         let occurrences = string.match(new RegExp('\-[a-z]', 'g'));

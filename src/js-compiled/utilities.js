@@ -11,15 +11,19 @@ var Utilities = function () {
 
     _createClass(Utilities, null, [{
         key: 'select',
-        value: function select(cssSelector) {
+        value: function select(cssSelector, doc) {
             if (cssSelector) {
+                if (doc) {
+                    return doc.querySelector(cssSelector);
+                }
                 return document.querySelector(cssSelector);
             }
         }
     }, {
         key: 'selectAll',
-        value: function selectAll(cssSelector) {
+        value: function selectAll(cssSelector, doc) {
             if (cssSelector) {
+                if (doc) return doc.querySelector(cssSelector);
                 return document.querySelectorAll(cssSelector);
             }
         }
@@ -71,49 +75,6 @@ var Utilities = function () {
         key: 'cf',
         value: function cf() {
             return document.createDocumentFragment();
-        }
-    }, {
-        key: 'appendElementToNodeIns',
-        value: function appendElementToNodeIns(element, nodeIns) {
-            if (nodeIns) {
-                if (nodeIns.element != null) {
-                    nodeIns.element.appendChild(element);
-                } else {
-                    nodeIns.appendChild(element);
-                }
-                this.element = element;
-            }
-
-            return this;
-        }
-    }, {
-        key: 'ce',
-        value: function ce(el, nodeIns) {
-            var element = document.createElement(el);
-
-            return this.appendElementToNodeIns(element, nodeIns);
-        }
-    }, {
-        key: 'ct',
-        value: function ct(tx, nodeIns) {
-            var element = document.createTextNode(tx);
-
-            return this.appendElementToNodeIns(element, nodeIns);
-        }
-    }, {
-        key: 'cn',
-        value: function cn(node, attributes, styles, nodeIns) {
-            var element = document.createElement(node);
-
-            for (var k in attributes) {
-                element.setAttribute(k, attributes[k]);
-            }
-
-            for (var _k in styles) {
-                element.style[_k] = styles[_k];
-            }
-
-            return this.appendElementToNodeIns(element, nodeIns);
         }
     }, {
         key: 'convertCss',

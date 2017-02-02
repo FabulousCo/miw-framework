@@ -1,13 +1,21 @@
 class Miw extends Utilities {
 
-    constructor(cssSelector){
+    constructor(cssSelector, parent){
         super();
         this.element = false;
         this.elements = false;
 
+
         if (cssSelector) {
-            if (document.querySelectorAll(cssSelector).length == 1) this.element = Utilities.select(cssSelector);
-            else this.elements = Utilities.selectAll(cssSelector);
+            if (cssSelector instanceof HTMLElement || cssSelector instanceof HTMLButtonElement) {
+                this.element = cssSelector;
+            } else if (parent && (parent instanceof HTMLElement || parent instanceof HTMLButtonElement)) {
+                if (document.querySelectorAll(cssSelector).length == 1) this.element = Utilities.select(cssSelector, parent);
+                else this.elements = Utilities.selectAll(cssSelector, parent);
+            } else {
+                if (document.querySelectorAll(cssSelector).length == 1) this.element = Utilities.select(cssSelector);
+                else this.elements = Utilities.selectAll(cssSelector);
+            }
         }
 
         return this;
@@ -77,9 +85,24 @@ class Miw extends Utilities {
         });
     }
     css(obj){
+        if (typeof obj === 'string'){
+            return (this.element ? this.element.style[obj] : false);
+        }
+
         return this.processSingleOrAll(function(element){
             for (let i in obj) {
                 element.style[i] = obj[i];
+            }
+        });
+    }
+    attribute(obj){
+        if (typeof obj === 'string'){
+            return (this.element ? this.element.getAttribute(obj) : false);
+        }
+
+        return this.processSingleOrAll(function(element){
+            for (let k in obj) {
+                element.setAttribute(k, obj[k]);
             }
         });
     }
@@ -254,5 +277,42 @@ class Miw extends Utilities {
             element.className = element.className.replace(string, '');
         });
     }
+    static appendElementToNodeIns(element, nodeIns) {
+        let miw = new Miw();
+        if (nodeIns) {
+            if (nodeIns.element != null) {
+                nodeIns.element.appendChild(element);
+            } else {
+                nodeIns.appendChild(element);
+            }
+            miw.element = element;
+        }
+
+        return miw;
+    }
+    static ce(el, nodeIns) {
+        let element = document.createElement(el);
+
+        return this.appendElementToNodeIns(element, nodeIns);
+    }
+    static ct(tx, nodeIns) {
+        let element = document.createTextNode(tx);
+
+        return this.appendElementToNodeIns(element, nodeIns);
+    }
+    static cn(node, attributes, styles, nodeIns) {
+        let element = document.createElement(node);
+
+        for (let k in attributes) {
+            element.setAttribute(k, attributes[k]);
+        }
+
+        for (let k in styles) {
+            element.style[k] = styles[k];
+        }
+
+        return this.appendElementToNodeIns(element, nodeIns);
+    }
+
 }
 
